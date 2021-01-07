@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # All dataset images
-*Selfie-dataset/images/*
+#Selfie-dataset/images/*
 
 # Dataset
 *gz
