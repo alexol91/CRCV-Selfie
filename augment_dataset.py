@@ -26,7 +26,7 @@ datagen = ImageDataGenerator(
 
 
 def get_img(img_path, transform=False):
-    img_path = "./Selfie-dataset/images/" + str(img_path) + ".jpg"
+    img_path = dataset_image_dir + str(img_path) + ".jpg"
     img = image.load_img(img_path, target_size=(306, 306))
     x = image.img_to_array(img)
 
@@ -37,7 +37,7 @@ def get_img(img_path, transform=False):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('Selfie-dataset/selfie_dataset.txt', header=None, delim_whitespace=True)
+    df = pd.read_csv(dataset_file_name, header=None, delim_whitespace=True)
     df = df.replace(to_replace=-1, value=0)
     CLASS_SIZE = 10000
     feature_dict = {
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         rand_idxs = sample(range(len(sub_df)), min(CLASS_SIZE, len(sub_df)))
 
         for row in sub_df[rand_idxs]:
-            # get_img(row[0]).save("./Augmented-Selfie-dataset/images/" + str(row[0]) + "_" + ".jpg")
+            # get_img(row[0]).save(dataset_image_dir + str(row[0]) + "_" + ".jpg")
             aug_df.append(row)
 
         for i in range(feature_dict[feature]):
@@ -65,11 +65,11 @@ if __name__ == "__main__":
             aug_row = list(sub_df[rand_idx])
             aug_row[0] = "aug_" + str(i) + "_" + feature + "_" + aug_row[0]
             get_img(sub_df[rand_idx][0], transform=True).save(
-                "./Augmented-Selfie-dataset/images/" + str(aug_row[0]) + ".jpg")
+                dataset_image_dir + str(aug_row[0]) + ".jpg")
             aug_df.append(aug_row)
 
         print(len(aug_df))
 
     aug_df = pd.DataFrame(aug_df)
-    aug_df.to_csv('./Augmented-Selfie-dataset/selfie_dataset.txt', sep=' ', index=False, header=None)
+    aug_df.to_csv(dataset_file_name, sep=' ', index=False, header=None)
 

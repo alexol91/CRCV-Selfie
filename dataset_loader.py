@@ -29,9 +29,9 @@ def img_loader(batch_size: int, io: int, mode="train", split=0.15):
     data_df = pd.read_csv(dataset_file_name, sep=r"\s+")
     train_df, test_df = train_test_split(data_df, test_size=split)
     if mode == "train":
-        data_list = train_df.as_matrix()
+        data_list = train_df.values
     else:  # mode == "test"
-        data_list = test_df.as_matrix()
+        data_list = test_df.values
     del data_df, train_df, test_df  # explicitly clean up memory
 
     while True:
@@ -60,8 +60,8 @@ def img_loader(batch_size: int, io: int, mode="train", split=0.15):
                     row = data_list[i]
                     X.append(get_img(row[col["imageName"]]))
                     Y.append(np.array(row[2:]))  # all the columns except image name and popularity score
-                X = np.asarray(X)
-                Y = np.asarray(Y)
+                X = np.asarray(X).astype(np.int)
+                Y = np.asarray(Y).astype(np.float32)
 
                 yield (X, Y)
 

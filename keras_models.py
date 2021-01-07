@@ -10,6 +10,32 @@ from keras.callbacks import TensorBoard, ModelCheckpoint, EarlyStopping
 from keras.utils import plot_model
 from matplotlib import pyplot as plt
 
+
+def build_model():
+    model = Sequential()
+    model.add(Input(shape=(*IMAGE_DIM, 3)))
+    model.add(Conv2D(filters=16, kernel_size=(3, 3)))
+    model.add(Activation('relu'))
+
+    model.add(MaxPool2D(pool_size=(3, 3)))
+    model.add(Dropout(rate=0.5))
+    model.add(Flatten())
+
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(rate=0.5))
+
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(rate=0.5))
+    model.add(Dense(36, activation='sigmoid', name="Attributes"))
+
+    model.compile(optimizer='adam',
+                  loss="binary_crossentropy",
+                  metrics= ['acc', 'mse', 'mae'])
+
+
+    model.summary()
+    return model
+
 def get_model(io: int, type="resnet"):
 
     if type == "resnet":

@@ -1,5 +1,5 @@
-dataset_file_name = "./Augmented-Selfie-dataset/selfie_dataset.txt"
-dataset_image_dir = "./Augmented-Selfie-dataset/images/"
+dataset_file_name = "./Selfie-dataset/selfie_dataset.txt"
+dataset_image_dir = "./Selfie-dataset/images/"
 
 IMAGE_DIM = (64, 64)
 # DATASET COLUMNS

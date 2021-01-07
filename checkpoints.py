@@ -28,6 +28,14 @@ def analyze_dataset(dataset_file_name="./Selfie-dataset/selfie_dataset.txt"):
         # ax = df.plot.bar(x="x", y="count", rot=0, title=col, )
         yield df, col
 
+def get_dataset(dataset_file_name="./Selfie-dataset/selfie_dataset.txt", select_col = None):
+    global col
+    data_df = pd.read_csv(dataset_file_name, sep="\s+", names=list(col.keys()))
+    if select_col is None:
+        select_col = list(col.keys())[3:]
+    select_df = data_df[select_col]
+    return select_df
+
 def plot_graph(history, metrics):
     fig = plt.figure(figsize=(15, 10))
     rows, columns = 2, len(metrics) # i think you want to change this
