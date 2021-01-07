@@ -13,25 +13,32 @@ from matplotlib import pyplot as plt
 
 def build_model():
     model = Sequential()
-    model.add(Input(shape=(*IMAGE_DIM, 3)))
-    model.add(Conv2D(filters=16, kernel_size=(3, 3)))
-    model.add(Activation('relu'))
 
-    model.add(MaxPool2D(pool_size=(3, 3)))
-    model.add(Dropout(rate=0.5))
+    model.add(Conv2D(input_shape=(*IMAGE_DIM, 3), filters=64, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(Conv2D(filters=64, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+    #model.add(Conv2D(filters=128, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(Conv2D(filters=128, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+    #model.add(Conv2D(filters=256, kernel_size=(3, 3), padding="same", activation="relu"))
+    #model.add(Conv2D(filters=256, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(Conv2D(filters=256, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+    #model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    #model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    #model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    #model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+    #model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    #model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(Conv2D(filters=512, kernel_size=(3, 3), padding="same", activation="relu"))
+    model.add(MaxPool2D(pool_size=(2, 2), strides=(2, 2)))
+
     model.add(Flatten())
-
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(rate=0.5))
-
-    model.add(Dense(64, activation='relu'))
-    model.add(Dropout(rate=0.5))
+    model.add(Dense(units=4096, activation="relu"))
+    model.add(Dense(units=4096, activation="relu"))
     model.add(Dense(36, activation='sigmoid', name="Attributes"))
 
-    model.compile(optimizer='adam',
-                  loss="binary_crossentropy",
-                  metrics= ['acc', 'mse', 'mae'])
-
+    model.compile(optimizer='adam', loss="binary_crossentropy", metrics= ['acc', 'mse', 'mae'])
 
     model.summary()
     return model

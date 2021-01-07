@@ -20,7 +20,7 @@ tensorboard_callback = TensorBoard(log_dir="logs",
                                    histogram_freq=0,
                                    write_graph=True,
                                    write_images=False)
-save_model_callback = ModelCheckpoint(os.path.join("weights", 'weights.{epoch:02d}.h5'),
+save_model_callback = ModelCheckpoint(os.path.join("weights", 'weights_binary.{epoch:02d}.h5'),
                                       verbose=3,
                                       save_best_only=True,
                                       save_weights_only=False,
@@ -33,20 +33,25 @@ early_stopping_callback = EarlyStopping(monitor='val_loss',
                                         verbose=0, mode='auto')
 
 
-BATCH_SIZE = 1024
-STEPS_PER_EPOCH = 128
+BATCH_SIZE = 512#1024
+STEPS_PER_EPOCH = 92#128
 EPOCHS = 512
-LAST_EPOCH = 64
+LAST_EPOCH = 0
 
 if LAST_EPOCH:
   model = load_model('weights/weights.'+str(LAST_EPOCH)+'.h5')
 else:
   model = build_model()
 print(model)
-
 '''
 ip = next(img_loader(batch_size=1, io=2))
+print(ip[1][0])
+ip = next(img_loader(batch_size=1, io=2))
+print(ip[1][0])
+ip = next(img_loader(batch_size=1, io=2))
+print(ip[1][0])
 op = model.predict(ip[0])
+exit()
 '''
 print('-- TRAINING --')
 history = model.fit(

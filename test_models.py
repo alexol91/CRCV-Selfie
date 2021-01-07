@@ -36,7 +36,7 @@ exit()
 
 # swtich window
 io=2
-model = load_model('weights/weights.80.h5')
+model = load_model('weights/weights.96.h5')
 #try_model(model, num_samples=6, io=io)
 
 ip = []

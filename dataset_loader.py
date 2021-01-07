@@ -59,7 +59,7 @@ def img_loader(batch_size: int, io: int, mode="train", split=0.15):
                 for i in range(batch_start, limit):
                     row = data_list[i]
                     X.append(get_img(row[col["imageName"]]))
-                    Y.append(np.array(row[2:]))  # all the columns except image name and popularity score
+                    Y.append(np.array([ 1 if i==1 else 0 for i in row[2:]]))  # all the columns except image name and popularity score
                 X = np.asarray(X).astype(np.int)
                 Y = np.asarray(Y).astype(np.float32)
 
